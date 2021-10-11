@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pdouelle.Blueprints.MediatR", "pdouelle.Blueprints.MediatR\pdouelle.Blueprints.MediatR.csproj", "{81274467-D453-4565-BF90-BABBC0C428FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pdouelle.Blueprint.MediatR.Debug", "pdouelle.Blueprint.MediatR.Debug\pdouelle.Blueprint.MediatR.Debug.csproj", "{C140700C-4BFC-42EF-ACF8-C19F820B2AA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{81274467-D453-4565-BF90-BABBC0C428FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81274467-D453-4565-BF90-BABBC0C428FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81274467-D453-4565-BF90-BABBC0C428FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C140700C-4BFC-42EF-ACF8-C19F820B2AA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C140700C-4BFC-42EF-ACF8-C19F820B2AA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C140700C-4BFC-42EF-ACF8-C19F820B2AA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C140700C-4BFC-42EF-ACF8-C19F820B2AA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -11,7 +11,7 @@ namespace pdouelle.Blueprints.MediatR
             services.AddMediatR(typeof(MediatRServiceExtensions).Assembly);
             services.AddAutoMapper(typeof(MediatRServiceExtensions).Assembly);
             
-            ApiResources.Assemblies = assemblies;
+            ApiResourceHelper.Assemblies = assemblies;
 
             return services;
         }

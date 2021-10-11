@@ -1,14 +1,15 @@
 using System;
+using pdouelle.Blueprints.MediatR.Attributes;
 
 namespace pdouelle.Blueprints.MediatR
 {
-    public class ApiResourceType
+    public class ApiResource
     {
-        public ApiResourceType()
+        public ApiResource()
         {
         }
 
-        public ApiResourceType(Type entity, ApiResourceAttribute attribute)
+        public ApiResource(Type entity, ApiResourceAttribute attribute)
         {
             Entity = entity;
             QueryList = attribute.QueryList;

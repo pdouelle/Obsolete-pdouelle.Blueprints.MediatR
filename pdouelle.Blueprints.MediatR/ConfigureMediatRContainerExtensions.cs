@@ -18,46 +18,46 @@ namespace pdouelle.Blueprints.MediatR
     {
         public static void ConfigureContainer(this ContainerBuilder builder, params Type[] dbContexts)
         {
-            ApiResourceType[] apiResources = ApiResources.GetApiResources().ToArray();
+            ApiResource[] models = ApiResourceHelper.GetModel().ToArray();
 
-            IEnumerable<TypeInfo> handlers = GetHandlersTypes(apiResources, dbContexts);
+            IEnumerable<TypeInfo> genericHandlers = GetGenericHandler(models, dbContexts);
             
-            foreach (TypeInfo handler in handlers)
+            foreach (TypeInfo genericHandler in genericHandlers)
             {
-                foreach (Type apiResource in handler.ImplementedInterfaces)
+                foreach (Type mediatRRequestHandler in genericHandler.ImplementedInterfaces)
                 {
-                    builder.RegisterType(handler).As(apiResource);
+                    builder.RegisterType(genericHandler).As(mediatRRequestHandler);
                 }
             }
         }
 
-        private static IEnumerable<TypeInfo> GetHandlersTypes(IEnumerable<ApiResourceType> apiResourceTypes, Type[] dbContextTypes)
+        private static IEnumerable<TypeInfo> GetGenericHandler(IEnumerable<ApiResource> models, Type[] dbContextTypes)
         {
-            foreach (ApiResourceType apiResourceType in apiResourceTypes)
+            foreach (ApiResource model in models)
             {
-                if (apiResourceType.QueryById is not null)
-                    yield return typeof(IdQueryHandler<,>).MakeGenericType(apiResourceType.Entity, apiResourceType.QueryById) as TypeInfo;
+                if (model.QueryById is not null)
+                    yield return typeof(IdQueryHandler<,>).MakeGenericType(model.Entity, model.QueryById) as TypeInfo;
                 
-                if (apiResourceType.QueryList is not null)
-                    yield return typeof(ListQueryHandler<,>).MakeGenericType(apiResourceType.Entity, apiResourceType.QueryList) as TypeInfo;
+                if (model.QueryList is not null)
+                    yield return typeof(ListQueryHandler<,>).MakeGenericType(model.Entity, model.QueryList) as TypeInfo;
                 
-                if (apiResourceType.Create is not null)
-                    yield return typeof(CreateCommandHandler<,>).MakeGenericType(apiResourceType.Entity, apiResourceType.Create) as TypeInfo;
+                if (model.Create is not null)
+                    yield return typeof(CreateCommandHandler<,>).MakeGenericType(model.Entity, model.Create) as TypeInfo;
                 
-                if (apiResourceType.Update is not null)
-                    yield return typeof(UpdateCommandHandler<,>).MakeGenericType(apiResourceType.Entity, apiResourceType.Update) as TypeInfo;
+                if (model.Update is not null)
+                    yield return typeof(UpdateCommandHandler<,>).MakeGenericType(model.Entity, model.Update) as TypeInfo;
                 
-                if (apiResourceType.Patch is not null)
-                    yield return typeof(PatchCommandHandler<,>).MakeGenericType(apiResourceType.Entity, apiResourceType.Patch) as TypeInfo;
+                if (model.Patch is not null)
+                    yield return typeof(PatchCommandHandler<,>).MakeGenericType(model.Entity, model.Patch) as TypeInfo;
                 
-                if (apiResourceType.Delete is not null)
-                    yield return typeof(DeleteCommandHandler<,>).MakeGenericType(apiResourceType.Entity, apiResourceType.Delete) as TypeInfo;
+                if (model.Delete is not null)
+                    yield return typeof(DeleteCommandHandler<,>).MakeGenericType(model.Entity, model.Delete) as TypeInfo;
                 
-                yield return typeof(SaveCommandHandler<>).MakeGenericType(apiResourceType.Entity) as TypeInfo;
+                yield return typeof(SaveCommandHandler<>).MakeGenericType(model.Entity) as TypeInfo;
                 
                 foreach (Type dbContextType in dbContextTypes)
                 {
-                    yield return typeof(Repository<,>).MakeGenericType(apiResourceType.Entity, dbContextType) as TypeInfo;
+                    yield return typeof(Repository<,>).MakeGenericType(model.Entity, dbContextType) as TypeInfo;
                 }
             }
         }

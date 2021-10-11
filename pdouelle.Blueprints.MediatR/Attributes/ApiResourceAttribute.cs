@@ -1,6 +1,6 @@
 using System;
 
-namespace pdouelle.Blueprints.MediatR
+namespace pdouelle.Blueprints.MediatR.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ApiResourceAttribute : Attribute

@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using pdouelle.Blueprints.MediatR.Attributes;
 
 namespace pdouelle.Blueprints.MediatR
 {
-    public static class ApiResources
+    public static class ApiResourceHelper
     {
         public static Assembly[] Assemblies { get; set; }
 
-        public static IEnumerable<ApiResourceType> GetApiResources()
+        public static IEnumerable<ApiResource> GetModel()
         {
             foreach (Assembly assembly in Assemblies)
             {
@@ -21,7 +22,7 @@ namespace pdouelle.Blueprints.MediatR
 
                     if (attribute is ApiResourceAttribute apiResourceAttribute)
                     {
-                        var apiResourceType = new ApiResourceType(type, apiResourceAttribute);
+                        var apiResourceType = new ApiResource(type, apiResourceAttribute);
                         
                         yield return apiResourceType;
                     }
