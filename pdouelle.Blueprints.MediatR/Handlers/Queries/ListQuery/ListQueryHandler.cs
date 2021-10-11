@@ -31,7 +31,7 @@ namespace pdouelle.Blueprints.MediatR.Handlers.Queries.ListQuery
 
             queryable = queryable.FilterByModel(model);
             
-            return await PagedList<TEntity>.ToPagedListAsync(queryable, model.PageNumber, model.PageSize);
+            return await PagedList<TEntity>.ToPagedListAsync(queryable, model.PageNumber, model.PageSize, cancellationToken);
         }
     }
 }
