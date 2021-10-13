@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <PackageId>pdouelle.Blueprints.MediatR</PackageId>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
         <Authors>Philippe DOUELLE</Authors>
         <Company>BETTERIT</Company>
         <RootNamespace>pdouelle.Blueprints.MediatR</RootNamespace>
@@ -18,7 +18,7 @@
       <PackageReference Include="MediatR" Version="9.0.0" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
       <PackageReference Include="pdouelle.GenericRepository" Version="1.0.0" />
-      <PackageReference Include="pdouelle.LinqExtensions" Version="1.0.2" />
+      <PackageReference Include="pdouelle.LinqExtensions" Version="1.0.3" />
       <PackageReference Include="pdouelle.Pagination" Version="1.0.3" />
     </ItemGroup>
 
