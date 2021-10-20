@@ -1,32 +1,33 @@
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
+using Ardalis.GuardClauses;
 using MediatR;
 using pdouelle.Blueprints.MediatR.Models.Commands.Create;
+using pdouelle.Blueprints.Repositories;
 using pdouelle.Entity;
-using pdouelle.GenericRepository;
 
 namespace pdouelle.Blueprints.MediatR.Handlers.Commands.Create
 {
-    public class CreateCommandHandler<TEntity, TCreate> : IRequestHandler<CreateCommandModel<TEntity, TCreate>, TEntity>
+    public class CreateCommandHandler<TEntity> : IRequestHandler<CreateCommandModel<TEntity>, TEntity>
         where TEntity : IEntity
     {
         protected readonly IRepository<TEntity> Repository;
-        private readonly IMapper _mapper;
 
-        public CreateCommandHandler(IRepository<TEntity> repository, IMapper mapper)
+        public CreateCommandHandler(IRepository<TEntity> repository)
         {
+            Guard.Against.Null(repository, nameof(repository));
+            
             Repository = repository;
-            _mapper = mapper;
         }
 
-        public virtual async Task<TEntity> Handle(CreateCommandModel<TEntity, TCreate> command, CancellationToken cancellationToken)
+        public virtual async Task<TEntity> Handle(CreateCommandModel<TEntity> command, CancellationToken cancellationToken)
         {
-            var entity = _mapper.Map<TEntity>(command.Request);
+            Guard.Against.Null(command, nameof(command));
+            Guard.Against.Null(command.Entity, nameof(command.Entity));
+            
+            await Repository.AddAsync(command.Entity, cancellationToken);
 
-            Repository.Create(entity);
-
-            return entity;
+            return command.Entity;
         }
     }
 }

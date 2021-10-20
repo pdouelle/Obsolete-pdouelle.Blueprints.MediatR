@@ -1,9 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using MediatR;
 using pdouelle.Blueprints.MediatR.Models.Commands.Save;
+using pdouelle.Blueprints.Repositories;
 using pdouelle.Entity;
-using pdouelle.GenericRepository;
 
 namespace pdouelle.Blueprints.MediatR.Handlers.Commands.Save
 {
@@ -14,6 +15,8 @@ namespace pdouelle.Blueprints.MediatR.Handlers.Commands.Save
 
         public SaveCommandHandler(IRepository<TEntity> repository)
         {
+            Guard.Against.Null(repository, nameof(repository));
+            
             Repository = repository;
         }
 

@@ -1,30 +1,28 @@
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
+using Ardalis.GuardClauses;
 using MediatR;
 using pdouelle.Blueprints.MediatR.Models.Commands.Update;
+using pdouelle.Blueprints.Repositories;
 using pdouelle.Entity;
-using pdouelle.GenericRepository;
 
 namespace pdouelle.Blueprints.MediatR.Handlers.Commands.Update
 {
-    public class UpdateCommandHandler<TEntity, TUpdate> : IRequestHandler<UpdateCommandModel<TEntity, TUpdate>, TEntity> 
+    public class UpdateCommandHandler<TEntity> : IRequestHandler<UpdateCommandModel<TEntity>, TEntity> 
         where TEntity : IEntity
     {
         protected readonly IRepository<TEntity> Repository;
-        private readonly IMapper _mapper;
 
-        public UpdateCommandHandler(IRepository<TEntity> repository, IMapper mapper)
+        public UpdateCommandHandler(IRepository<TEntity> repository)
         {
+            Guard.Against.Null(repository, nameof(repository));
+            
             Repository = repository;
-            _mapper = mapper;
         }
 
-        public virtual async Task<TEntity> Handle(UpdateCommandModel<TEntity, TUpdate> command, CancellationToken cancellationToken)
+        public virtual async Task<TEntity> Handle(UpdateCommandModel<TEntity> command, CancellationToken cancellationToken)
         {
-            _mapper.Map(command.Request, command.Entity);
-
-            Repository.Edit(command.Entity);
+            Repository.Update(command.Entity);
 
             return command.Entity;
         }

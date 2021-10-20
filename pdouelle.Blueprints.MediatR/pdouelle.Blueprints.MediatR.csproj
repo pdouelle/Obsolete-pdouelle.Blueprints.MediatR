@@ -17,7 +17,7 @@
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
       <PackageReference Include="MediatR" Version="9.0.0" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-      <PackageReference Include="pdouelle.GenericRepository" Version="1.0.0" />
+      <PackageReference Include="pdouelle.Blueprints.Repositories" Version="5.0.1" />
       <PackageReference Include="pdouelle.LinqExtensions" Version="1.0.4" />
       <PackageReference Include="pdouelle.Pagination" Version="1.0.3" />
     </ItemGroup>

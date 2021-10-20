@@ -2,8 +2,8 @@ using MediatR;
 
 namespace pdouelle.Blueprints.MediatR.Models.Commands.Create
 {
-    public class CreateCommandModel<TEntity, TCreate> : IRequest<TEntity>
+    public class CreateCommandModel<TEntity> : IRequest<TEntity>
     {
-        public TCreate Request { get; set; }
+        public TEntity Entity { get; set; }
     }
 }

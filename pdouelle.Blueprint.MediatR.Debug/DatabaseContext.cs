@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using pdouelle.Blueprint.MediatR.Debug.Entities;
 
-namespace pdouelle.Blueprint.MediatR.Debug.Data
+namespace pdouelle.Blueprint.MediatR.Debug
 {
-    public class DatabaseService : DbContext
+    public class DatabaseContext : DbContext
     {
-        public DatabaseService(DbContextOptions<DatabaseService> options) : base(options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
 

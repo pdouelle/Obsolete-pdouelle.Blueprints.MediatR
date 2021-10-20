@@ -1,4 +1,7 @@
+using System;
+using System.Linq;
 using Autofac;
+using AutoFixture;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using pdouelle.Blueprint.MediatR.Debug.Data;
+using pdouelle.Blueprint.MediatR.Debug.Entities;
 using pdouelle.Blueprints.MediatR;
 
 namespace pdouelle.Blueprint.MediatR.Debug
@@ -30,14 +33,13 @@ namespace pdouelle.Blueprint.MediatR.Debug
             services.AddBlueprintMediatR(typeof(Startup).Assembly);
             services.AddAutoMapper(typeof(Startup).Assembly);
             
-            var connectionString = Configuration.GetConnectionString("Database");
-            services.AddDbContext<DatabaseService>(options => { options.UseSqlServer(connectionString); });
+            services.AddDbContext<DatabaseContext>(options => options.UseInMemoryDatabase("Database"));
             
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "pdouelle.Blueprint.MediatR.Debug", Version = "v1" }); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DatabaseContext context)
         {
             if (env.IsDevelopment())
             {
@@ -47,6 +49,8 @@ namespace pdouelle.Blueprint.MediatR.Debug
             }
 
             app.UseHttpsRedirection();
+            
+            SeedDatabase(context);
 
             app.UseRouting();
 
@@ -55,7 +59,27 @@ namespace pdouelle.Blueprint.MediatR.Debug
         
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.ConfigureContainer(typeof(DatabaseService));
+            builder.ConfigureContainer(typeof(DatabaseContext));
+        }
+        
+        private void SeedDatabase(DatabaseContext context)
+        {
+            context.Database.EnsureCreated();
+            
+            if (!context.WeatherForecasts.Any())
+            {
+                var fixture = new Fixture();
+                
+                context.WeatherForecasts.Add(new WeatherForecast()
+                {
+                    Date = fixture.Create<DateTime>(),
+                    Summary = fixture.Create<string>(),
+                    TemperatureC = fixture.Create<int>(),
+                    TemperatureF = fixture.Create<int>(),
+                });
+
+                context.SaveChanges();
+            }
         }
     }
 }

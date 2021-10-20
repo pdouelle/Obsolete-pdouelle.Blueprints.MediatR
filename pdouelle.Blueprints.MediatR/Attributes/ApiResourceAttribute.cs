@@ -6,10 +6,10 @@ namespace pdouelle.Blueprints.MediatR.Attributes
     public class ApiResourceAttribute : Attribute
     {
         public Type QueryList { get; set; }
-        public Type QueryById { get; set; }
-        public Type Create { get; set; }
-        public Type Update { get; set; }
-        public Type Patch { get; set; }
-        public Type Delete { get; set; }
+        
+        public bool CustomQueryById { get; set; }
+        public bool CustomCreate { get; set; }
+        public bool CustomUpdate { get; set; }
+        public bool CustomDelete { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using Ardalis.GuardClauses;
 using pdouelle.Blueprints.MediatR.Attributes;
 
 namespace pdouelle.Blueprints.MediatR
@@ -13,19 +14,18 @@ namespace pdouelle.Blueprints.MediatR
         {
             Entity = entity;
             QueryList = attribute.QueryList;
-            QueryById = attribute.QueryById;
-            Create = attribute.Create;
-            Update = attribute.Update;
-            Patch = attribute.Patch;
-            Delete = attribute.Delete;
+            CustomQueryById = attribute.CustomQueryById;
+            CustomCreate = attribute.CustomCreate;
+            CustomUpdate = attribute.CustomUpdate;
+            CustomDelete = attribute.CustomDelete;
         }
 
         public Type Entity { get; set; }
         public Type QueryList { get; set; }
-        public Type QueryById { get; set; }
-        public Type Create { get; set; }
-        public Type Update { get; set; }
-        public Type Patch { get; set; }
-        public Type Delete { get; set; }
+        
+        public bool CustomQueryById { get; set; }
+        public bool CustomCreate { get; set; }
+        public bool CustomUpdate { get; set; }
+        public bool CustomDelete { get; set; }
     }
 }

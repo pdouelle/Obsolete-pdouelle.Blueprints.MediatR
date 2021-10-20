@@ -5,7 +5,5 @@ namespace pdouelle.Blueprint.MediatR.Debug.Models.WeatherForecasts.Models.Querie
     public class GetWeatherForecastListQueryModel : QueryStringPaginationSort
     {
         public bool IncludeBlobs { get; set; }
-
-        public string Sort { get; set; } = "id asc";
     }
 }

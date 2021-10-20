@@ -5,12 +5,11 @@ using System.Reflection;
 using Autofac;
 using pdouelle.Blueprints.MediatR.Handlers.Commands.Create;
 using pdouelle.Blueprints.MediatR.Handlers.Commands.Delete;
-using pdouelle.Blueprints.MediatR.Handlers.Commands.Patch;
 using pdouelle.Blueprints.MediatR.Handlers.Commands.Save;
 using pdouelle.Blueprints.MediatR.Handlers.Commands.Update;
 using pdouelle.Blueprints.MediatR.Handlers.Queries.IdQuery;
 using pdouelle.Blueprints.MediatR.Handlers.Queries.ListQuery;
-using pdouelle.GenericRepository;
+using pdouelle.Blueprints.Repositories;
 
 namespace pdouelle.Blueprints.MediatR
 {
@@ -35,23 +34,20 @@ namespace pdouelle.Blueprints.MediatR
         {
             foreach (ApiResource model in models)
             {
-                if (model.QueryById is not null)
-                    yield return typeof(IdQueryHandler<,>).MakeGenericType(model.Entity, model.QueryById) as TypeInfo;
+                if (model.CustomQueryById is false)
+                    yield return typeof(IdQueryHandler<>).MakeGenericType(model.Entity) as TypeInfo;
                 
                 if (model.QueryList is not null)
                     yield return typeof(ListQueryHandler<,>).MakeGenericType(model.Entity, model.QueryList) as TypeInfo;
                 
-                if (model.Create is not null)
-                    yield return typeof(CreateCommandHandler<,>).MakeGenericType(model.Entity, model.Create) as TypeInfo;
+                if (model.CustomCreate is false)
+                    yield return typeof(CreateCommandHandler<>).MakeGenericType(model.Entity) as TypeInfo;
                 
-                if (model.Update is not null)
-                    yield return typeof(UpdateCommandHandler<,>).MakeGenericType(model.Entity, model.Update) as TypeInfo;
+                if (model.CustomUpdate is false)
+                    yield return typeof(UpdateCommandHandler<>).MakeGenericType(model.Entity) as TypeInfo;
                 
-                if (model.Patch is not null)
-                    yield return typeof(PatchCommandHandler<,>).MakeGenericType(model.Entity, model.Patch) as TypeInfo;
-                
-                if (model.Delete is not null)
-                    yield return typeof(DeleteCommandHandler<,>).MakeGenericType(model.Entity, model.Delete) as TypeInfo;
+                if (model.CustomDelete is false)
+                    yield return typeof(DeleteCommandHandler<>).MakeGenericType(model.Entity) as TypeInfo;
                 
                 yield return typeof(SaveCommandHandler<>).MakeGenericType(model.Entity) as TypeInfo;
                 
