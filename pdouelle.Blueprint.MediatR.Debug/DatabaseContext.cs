@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using pdouelle.Blueprint.MediatR.Debug.Entities;
+using pdouelle.Blueprint.MediatR.Debug.Domain.ChildEntities.Entities;
+using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Entities;
 
 namespace pdouelle.Blueprint.MediatR.Debug
 {
@@ -10,5 +11,6 @@ namespace pdouelle.Blueprint.MediatR.Debug
         }
 
         public DbSet<WeatherForecast> WeatherForecasts { get; set; }
+        public DbSet<ChildEntity> ChildEntities { get; set; }
     }
 }

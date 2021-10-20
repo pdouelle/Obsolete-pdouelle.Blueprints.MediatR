@@ -7,16 +7,18 @@ using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using pdouelle.Blueprint.MediatR.Debug.Entities;
-using pdouelle.Blueprint.MediatR.Debug.Models.WeatherForecasts.Models.Commands.CreateWeatherForecast;
-using pdouelle.Blueprint.MediatR.Debug.Models.WeatherForecasts.Models.Commands.PatchWeatherForecast;
-using pdouelle.Blueprint.MediatR.Debug.Models.WeatherForecasts.Models.Queries.GetWeatherForecastList;
+using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Entities;
+using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Commands.CreateWeatherForecast;
+using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Commands.PatchWeatherForecast;
+using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Queries.GetWeatherForecastList;
+using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Queries.GetWeatherForecastSingle;
 using pdouelle.Blueprints.MediatR.Models.Commands.Create;
 using pdouelle.Blueprints.MediatR.Models.Commands.Delete;
 using pdouelle.Blueprints.MediatR.Models.Commands.Save;
 using pdouelle.Blueprints.MediatR.Models.Commands.Update;
 using pdouelle.Blueprints.MediatR.Models.Queries.IdQuery;
 using pdouelle.Blueprints.MediatR.Models.Queries.ListQuery;
+using pdouelle.Blueprints.MediatR.Models.Queries.SingleQuery;
 using pdouelle.Pagination;
 
 namespace pdouelle.Blueprint.MediatR.Debug.Controllers
@@ -62,13 +64,13 @@ namespace pdouelle.Blueprint.MediatR.Debug.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAsync([FromQuery] GetWeatherForecastSingleQueryModel request, CancellationToken cancellationToken)
         {
-            WeatherForecast response = await _mediator.Send(new IdQueryModel<WeatherForecast>
+            WeatherForecast response = await _mediator.Send(new SingleQueryModel<WeatherForecast, GetWeatherForecastSingleQueryModel>
             {
-                Id = id
+                Request = request
             }, cancellationToken);
-
+            
             if (response == null)
                 return NotFound();
 
@@ -76,9 +78,9 @@ namespace pdouelle.Blueprint.MediatR.Debug.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] CreateWeatherForecastCommandModel parameters, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateAsync([FromBody] CreateWeatherForecastCommandModel model, CancellationToken cancellationToken)
         {
-            var request = _mapper.Map<WeatherForecast>(parameters);
+            var request = _mapper.Map<WeatherForecast>(model);
             
             WeatherForecast entity = await _mediator.Send(new CreateCommandModel<WeatherForecast>
             { 

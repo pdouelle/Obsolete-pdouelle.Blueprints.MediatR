@@ -9,6 +9,7 @@ using pdouelle.Blueprints.MediatR.Handlers.Commands.Save;
 using pdouelle.Blueprints.MediatR.Handlers.Commands.Update;
 using pdouelle.Blueprints.MediatR.Handlers.Queries.IdQuery;
 using pdouelle.Blueprints.MediatR.Handlers.Queries.ListQuery;
+using pdouelle.Blueprints.MediatR.Handlers.Queries.SingleQuery;
 using pdouelle.Blueprints.Repositories;
 
 namespace pdouelle.Blueprints.MediatR
@@ -39,6 +40,9 @@ namespace pdouelle.Blueprints.MediatR
                 
                 if (model.QueryList is not null)
                     yield return typeof(ListQueryHandler<,>).MakeGenericType(model.Entity, model.QueryList) as TypeInfo;
+                
+                if (model.QuerySingle is not null)
+                    yield return typeof(SingleQueryHandler<,>).MakeGenericType(model.Entity, model.QuerySingle) as TypeInfo;
                 
                 if (model.CustomCreate is false)
                     yield return typeof(CreateCommandHandler<>).MakeGenericType(model.Entity) as TypeInfo;

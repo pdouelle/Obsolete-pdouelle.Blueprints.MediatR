@@ -1,9 +1,9 @@
 using AutoMapper;
-using pdouelle.Blueprint.MediatR.Debug.Entities;
-using pdouelle.Blueprint.MediatR.Debug.Models.WeatherForecasts.Models.Commands.CreateWeatherForecast;
-using pdouelle.Blueprint.MediatR.Debug.Models.WeatherForecasts.Models.Commands.PatchWeatherForecast;
+using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Entities;
+using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Commands.CreateWeatherForecast;
+using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Commands.PatchWeatherForecast;
 
-namespace pdouelle.Blueprint.MediatR.Debug.Models.WeatherForecasts.Profiles
+namespace pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Profiles
 {
     public class WeatherForecastProfile : Profile
     {

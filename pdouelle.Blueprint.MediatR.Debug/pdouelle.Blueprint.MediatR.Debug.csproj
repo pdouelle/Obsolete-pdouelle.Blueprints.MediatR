@@ -23,4 +23,8 @@
       <ProjectReference Include="..\pdouelle.Blueprints.MediatR\pdouelle.Blueprints.MediatR.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Domain\ChildEntities\Models" />
+    </ItemGroup>
+
 </Project>

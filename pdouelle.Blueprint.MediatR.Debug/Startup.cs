@@ -10,7 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using pdouelle.Blueprint.MediatR.Debug.Entities;
+using Newtonsoft.Json;
+using pdouelle.Blueprint.MediatR.Debug.Domain.ChildEntities.Entities;
+using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Entities;
 using pdouelle.Blueprints.MediatR;
 
 namespace pdouelle.Blueprint.MediatR.Debug
@@ -27,7 +29,10 @@ namespace pdouelle.Blueprint.MediatR.Debug
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
 
             services.AddMediatR(typeof(Startup).Assembly);
             services.AddBlueprintMediatR(typeof(Startup).Assembly);
@@ -69,15 +74,27 @@ namespace pdouelle.Blueprint.MediatR.Debug
             if (!context.WeatherForecasts.Any())
             {
                 var fixture = new Fixture();
-                
-                context.WeatherForecasts.Add(new WeatherForecast()
+
+                var weatherForecast = new WeatherForecast
                 {
                     Date = fixture.Create<DateTime>(),
                     Summary = fixture.Create<string>(),
                     TemperatureC = fixture.Create<int>(),
                     TemperatureF = fixture.Create<int>(),
-                });
+                };
+                
+                context.WeatherForecasts.Add(weatherForecast);
+                
+                context.SaveChanges();
 
+                var childEntity = new ChildEntity
+                {
+                    WeatherForecastId = weatherForecast.Id,
+                    Name = fixture.Create<string>()
+                };
+                
+                context.ChildEntities.Add(childEntity);
+                
                 context.SaveChanges();
             }
         }

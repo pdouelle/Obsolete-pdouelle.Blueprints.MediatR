@@ -14,6 +14,7 @@ namespace pdouelle.Blueprints.MediatR
         {
             Entity = entity;
             QueryList = attribute.QueryList;
+            QuerySingle = attribute.QuerySingle;
             CustomQueryById = attribute.CustomQueryById;
             CustomCreate = attribute.CustomCreate;
             CustomUpdate = attribute.CustomUpdate;
@@ -22,6 +23,7 @@ namespace pdouelle.Blueprints.MediatR
 
         public Type Entity { get; set; }
         public Type QueryList { get; set; }
+        public Type QuerySingle { get; set; }
         
         public bool CustomQueryById { get; set; }
         public bool CustomCreate { get; set; }
