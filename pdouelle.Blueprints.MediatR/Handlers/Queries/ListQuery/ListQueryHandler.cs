@@ -32,7 +32,7 @@ namespace pdouelle.Blueprints.MediatR.Handlers.Queries.ListQuery
             
             IQueryable<TEntity> queryable = Repository.GetAll();
 
-            queryable = queryable.FilterByModel(query.Request);
+            queryable = queryable.FilterByModelWithSort(query.Request);
             
             return await PagedList<TEntity>.ToPagedListAsync(queryable, query.Request.PageNumber, query.Request.PageSize, cancellationToken);
         }
