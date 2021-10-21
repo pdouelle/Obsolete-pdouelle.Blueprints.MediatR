@@ -10,5 +10,15 @@ namespace pdouelle.Blueprints.MediatR.Models.Queries.ListQuery
         where TQueryList : IPagination, ISort
     {
         public TQueryList Request { get; set; }
+
+        public ListQueryModel()
+        {
+            
+        }
+
+        public ListQueryModel(TQueryList request)
+        {
+            Request = request;
+        }
     }
 }
