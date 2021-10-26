@@ -7,6 +7,7 @@ using pdouelle.Blueprints.MediatR.Handlers.Commands.Create;
 using pdouelle.Blueprints.MediatR.Handlers.Commands.Delete;
 using pdouelle.Blueprints.MediatR.Handlers.Commands.Save;
 using pdouelle.Blueprints.MediatR.Handlers.Commands.Update;
+using pdouelle.Blueprints.MediatR.Handlers.Queries.ExistsQuery;
 using pdouelle.Blueprints.MediatR.Handlers.Queries.IdQuery;
 using pdouelle.Blueprints.MediatR.Handlers.Queries.ListQuery;
 using pdouelle.Blueprints.MediatR.Handlers.Queries.SingleQuery;
@@ -52,6 +53,8 @@ namespace pdouelle.Blueprints.MediatR
                 
                 if (model.CustomDelete is false)
                     yield return typeof(DeleteCommandHandler<>).MakeGenericType(model.Entity) as TypeInfo;
+                
+                yield return typeof(ExistsQueryHandler<>).MakeGenericType(model.Entity) as TypeInfo;
                 
                 yield return typeof(SaveCommandHandler<>).MakeGenericType(model.Entity) as TypeInfo;
                 

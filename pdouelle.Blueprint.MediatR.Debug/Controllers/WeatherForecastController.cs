@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
@@ -12,10 +13,12 @@ using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Commands.C
 using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Commands.PatchWeatherForecast;
 using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Queries.GetWeatherForecastList;
 using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Queries.GetWeatherForecastSingle;
+using pdouelle.Blueprints.MediatR.Handlers.Queries.ExistsQuery;
 using pdouelle.Blueprints.MediatR.Models.Commands.Create;
 using pdouelle.Blueprints.MediatR.Models.Commands.Delete;
 using pdouelle.Blueprints.MediatR.Models.Commands.Save;
 using pdouelle.Blueprints.MediatR.Models.Commands.Update;
+using pdouelle.Blueprints.MediatR.Models.Queries.ExistsQuery;
 using pdouelle.Blueprints.MediatR.Models.Queries.IdQuery;
 using pdouelle.Blueprints.MediatR.Models.Queries.ListQuery;
 using pdouelle.Blueprints.MediatR.Models.Queries.SingleQuery;
@@ -138,6 +141,23 @@ namespace pdouelle.Blueprint.MediatR.Debug.Controllers
             await _mediator.Send(new SaveCommandModel<WeatherForecast>(), cancellationToken);
 
             return NoContent();
+        }
+        
+        [HttpGet("exists/TemperatureC/{temperatureC:int}")]
+        public async Task<IActionResult> ExistsAsync(int temperatureC, CancellationToken cancellationToken)
+        {
+            // [Exists(Resource = typeof(WeatherForecast), Name = optional)
+            // new ExistsQueryModel<WeatherForecast>(propertyName, value)
+            // new ExistsQueryModel<WeatherForecast>(List<propertyName, value>)
+            
+            var existRequest = new List<KeyValuePair<string, object>>
+            {
+                new(nameof(WeatherForecast.TemperatureC), temperatureC)
+            };
+            
+            var exist = await _mediator.Send(new ExistsQueryModel<WeatherForecast>(existRequest), cancellationToken);
+            
+            return Ok(exist);
         }
     }
 }
