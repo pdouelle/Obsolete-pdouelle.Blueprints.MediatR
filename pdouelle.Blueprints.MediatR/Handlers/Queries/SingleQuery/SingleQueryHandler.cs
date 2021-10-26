@@ -8,13 +8,11 @@ using pdouelle.Blueprints.MediatR.Models.Queries.SingleQuery;
 using pdouelle.Blueprints.Repositories;
 using pdouelle.Entity;
 using pdouelle.LinqExtensions;
-using pdouelle.Sort;
 
 namespace pdouelle.Blueprints.MediatR.Handlers.Queries.SingleQuery
 {
     public class SingleQueryHandler<TEntity, TQuerySingle> : IRequestHandler<SingleQueryModel<TEntity,TQuerySingle>, TEntity>
-        where TEntity : class, IEntity 
-        where TQuerySingle : ISort
+        where TEntity : class, IEntity
     {
         protected readonly IRepository<TEntity> Repository;
 

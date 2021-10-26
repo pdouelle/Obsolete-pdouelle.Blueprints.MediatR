@@ -13,7 +13,6 @@ using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Commands.C
 using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Commands.PatchWeatherForecast;
 using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Queries.GetWeatherForecastList;
 using pdouelle.Blueprint.MediatR.Debug.Domain.WeatherForecasts.Models.Queries.GetWeatherForecastSingle;
-using pdouelle.Blueprints.MediatR.Handlers.Queries.ExistsQuery;
 using pdouelle.Blueprints.MediatR.Models.Commands.Create;
 using pdouelle.Blueprints.MediatR.Models.Commands.Delete;
 using pdouelle.Blueprints.MediatR.Models.Commands.Save;

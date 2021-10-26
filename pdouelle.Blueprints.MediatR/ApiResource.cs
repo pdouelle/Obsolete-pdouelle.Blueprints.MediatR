@@ -1,5 +1,4 @@
 using System;
-using Ardalis.GuardClauses;
 using pdouelle.Blueprints.MediatR.Attributes;
 
 namespace pdouelle.Blueprints.MediatR
