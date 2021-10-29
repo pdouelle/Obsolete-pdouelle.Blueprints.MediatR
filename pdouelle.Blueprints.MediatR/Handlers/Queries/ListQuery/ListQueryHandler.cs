@@ -7,6 +7,7 @@ using pdouelle.Blueprints.MediatR.Models.Queries.ListQuery;
 using pdouelle.Blueprints.Repositories;
 using pdouelle.Entity;
 using pdouelle.LinqExtensions;
+using pdouelle.LinqExtensions.Interfaces;
 using pdouelle.Pagination;
 using pdouelle.Sort;
 
@@ -14,7 +15,7 @@ namespace pdouelle.Blueprints.MediatR.Handlers.Queries.ListQuery
 {
     public class ListQueryHandler<TEntity, TQueryList> : IRequestHandler<ListQueryModel<TEntity, TQueryList>, PagedList<TEntity>> 
         where TEntity : class, IEntity 
-        where TQueryList : IPagination, ISort
+        where TQueryList : IPagination, ISort, IInclude
     {
         protected readonly IRepository<TEntity> Repository;
 
